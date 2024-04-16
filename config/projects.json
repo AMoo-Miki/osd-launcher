@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Dashboards",
+    "slug": "dashboards",
+    "src": "github://opensearch-project/OpenSearch-Dashboards/2.x"
+  },
+  {
+    "name": "Alerting",
+    "slug": "alerting",
+    "src": "github://opensearch-project/alerting-dashboards-plugin/2.x"
+  },
+  {
+    "name": "Anomaly Detection",
+    "slug": "anomaly-detection",
+    "src": "github://opensearch-project/anomaly-detection-dashboards-plugin/2.x"
+  },
+  {
+    "name": "Assistant",
+    "slug": "assistant",
+    "src": "github://opensearch-project/dashboards-assistant/2.x"
+  },
+  {
+    "name": "Index Management",
+    "slug": "index-management",
+    "src": "github://opensearch-project/index-management-dashboards-plugin/2.x"
+  },
+  {
+    "name": "Maps",
+    "slug": "maps",
+    "src": "github://opensearch-project/dashboards-maps/2.x",
+    "releaseName": "customImportMapDashboards"
+  },
+  {
+    "name": "ML Commons",
+    "slug": "ml-commons",
+    "src": "github://opensearch-project/ml-commons-dashboards/2.x"
+  },
+  {
+    "name": "Notifications",
+    "slug": "notifications",
+    "src": "github://opensearch-project/dashboards-notifications/2.x"
+  },
+  {
+    "name": "Observability",
+    "slug": "observability",
+    "src": "github://opensearch-project/dashboards-observability/2.x"
+  },
+  {
+    "name": "Query Workbench",
+    "slug": "query-workbench",
+    "src": "github://opensearch-project/dashboards-query-workbench/2.x"
+  },
+  {
+    "name": "Reports",
+    "slug": "reporting",
+    "src": "github://opensearch-project/dashboards-reporting/2.x",
+    "releaseName": "reportsDashboards"
+  },
+  {
+    "name": "Search Relevance",
+    "slug": "search-relevance",
+    "src": "github://opensearch-project/dashboards-search-relevance/2.x"
+  },
+  {
+    "name": "Security Analytics",
+    "slug": "security-analytics",
+    "src": "github://opensearch-project/security-analytics-dashboards-plugin/2.x"
+  },
+  {
+    "name": "Security",
+    "slug": "security",
+    "src": "github://opensearch-project/security-dashboards-plugin/2.x"
+  },
+  {
+    "name": "Visualizations",
+    "slug": "gantt-chart",
+    "src": "github://opensearch-project/dashboards-visualizations/2.x"
+  }
+]
