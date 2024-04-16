@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { mkdir, rm } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { get } from './lib/config.js';
 import { program, Option, InvalidArgumentError } from 'commander';
-import { _error, _info, _ok, _verbose2, _warning } from './lib/logging.js';
-import { dirname, join, resolve, isAbsolute } from 'node:path';
+import { _error, _ok, _verbose2, _warning } from './lib/logging.js';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { prepareOpenSearch, runOpenSearch } from './lib/opensearch.js';
 import { prepareDashboards, runDashboards } from './lib/dashboards.js';
@@ -72,7 +71,7 @@ program
   )
   .option(
     '-d, --destination <path>',
-    'Location for deploying\n[default]: current folder',
+    'Location for deploying',
     resolveDestination,
     process.cwd(),
   )
@@ -84,17 +83,17 @@ program
   .option('--refresh-downloads', 'Re-download artifacts even if they are available in cache')
   .option(
     '--opensearch-host <hostname|IP>',
-    'Hostname or IP address for OpenSearch to listen on\n[default]: 127.0.0.1',
+    'Hostname or IP address for OpenSearch to listen on',
     '127.0.0.1',
   )
-  .option('--opensearch-port <number>', 'Port number for OpenSearch to listen on\n[default]: 9200', '9200')
+  .option('--opensearch-port <number>', 'Port number for OpenSearch to listen on', '9200')
   .option(
     '--dashboards-host <hostname|IP>',
-    'Hostname or IP address for OpenSearch to listen on\n[default]: 0.0.0.0',
+    'Hostname or IP address for OpenSearch to listen on',
     '0.0.0.0',
   )
-  .option('--dashboards-port <number>', 'Port number for OpenSearch to listen on\n[default]: 5601', '5601')
-  .option('-u, --username <username>', 'Username to use if security is enable\n[default]: admin', 'admin')
+  .option('--dashboards-port <number>', 'Port number for OpenSearch to listen on', '5601')
+  .option('-u, --username <username>', 'Username to use if security is enable', 'admin')
   .requiredOption('-p, --password <password>', 'Password to use if security is enable')
   .option('-dev --no-build', 'Skip building Dashboards when cloned')
   // ToDo: Add ability to start installations as a service

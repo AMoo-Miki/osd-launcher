@@ -11,21 +11,23 @@ Options:
   -osd, --dashboards-version <version|github>  Dashboards version to use
                                                <version>: use a released version
                                                <github>: clone a git repo/branch/commit
-  -d, --destination <path>                     Location for deploying
-                                               [default]: current folder (default: "/home/ec2-user/launcher")
+  -d, --destination <path>                     Location for deploying 
+                                               (default: current working directory)
   --no-plugins                                 Prevent installation of Dashboards plugins
-  --no-security                                Disable the Security plugins in OpenSearch and Dashboards
-  --refresh-downloads                          Re-download artifacts even if they are available in cache
-  --opensearch-host <hostname|IP>              Hostname or IP address for OpenSearch to listen on
-                                               [default]: 127.0.0.1 (default: "127.0.0.1")
+  --no-security                                Disable the Security plugins in OpenSearch and
+                                               Dashboards
+  --refresh-downloads                          Re-download artifacts even if they are
+                                               available in cache
+  --opensearch-host <hostname|IP>              Hostname or IP address for OpenSearch to
+                                               listen on (default: "127.0.0.1")
   --opensearch-port <number>                   Port number for OpenSearch to listen on
-                                               [default]: 9200 (default: "9200")
-  --dashboards-host <hostname|IP>              Hostname or IP address for OpenSearch to listen on
-                                               [default]: 0.0.0.0 (default: "0.0.0.0")
+                                               (default: "9200")
+  --dashboards-host <hostname|IP>              Hostname or IP address for OpenSearch to
+                                               listen on (default: "0.0.0.0")
   --dashboards-port <number>                   Port number for OpenSearch to listen on
-                                               [default]: 5601 (default: "5601")
+                                               (default: "5601")
   -u, --username <username>                    Username to use if security is enable
-                                               [default]: admin (default: "admin")
+                                               (default: "admin")
   -p, --password <password>                    Password to use if security is enable
   -dev --no-build                              Skip building Dashboards when cloned
   -v, --version                                Print launcher version
@@ -71,5 +73,4 @@ Fine-tuning Dashboards plugins:
   If Dashboards is cloned from a numeric branch name (e.g. 2.15 and 2.x), the plugins will
   be cloned from the matching branch of the official sources, unless a specific source is
   requested for them. 
-
 ```
