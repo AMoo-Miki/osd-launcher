@@ -15,9 +15,9 @@ Usage: osd-launcher [options]
 
 Options:
   -os, --opensearch-version <version>          OpenSearch version to use
-  -osd, --dashboards-version <version|github>  Dashboards version to use
+  -osd, --dashboards-version <version|repo>    Dashboards version to use
                                                <version>: use a released version
-                                               <github>: clone a git repo/branch/commit
+                                               <repo>: clone from a repository
   -d, --destination <path>                     Location for deploying 
                                                (default: current working directory)
   --no-plugins                                 Prevent installation of Dashboards plugins
@@ -41,7 +41,7 @@ Options:
   -h, --help                                   display help for command
 
 Fine-tuning Dashboards plugins:
-  The version of Dashboards plugins can be specified using --<name>-source <github>.
+  The version of Dashboards plugins can be specified using --<name>-source <repo>.
   The inclusion of a plugin can be prevented using --no-<name>.
   
   Supported plugin names are: 
@@ -69,10 +69,10 @@ Fine-tuning Dashboards plugins:
 <version> format:
   A complete release version includes all 3 components of a semantic version. e.g. 2.15.0
   
-<github> format:
-  A GitHub source starts with "github://" and includes all 3 names of the use, the repository
+<repo> format:
+  A GitHub source starts with "github:" and includes all 3 names of the use, the repository
   and the branch:
-    github://opensearch-project/opensearch-dashboards/awesome-feature
+    github:opensearch-project/opensearch-dashboards/awesome-feature
     
   A shorthand alternative is also supported to use a branch from the official repositories:
     github://2.x

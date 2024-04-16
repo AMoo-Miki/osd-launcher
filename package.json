@@ -1,6 +1,6 @@
 {
   "name": "osd-launcher",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "CLI to ease the setup of OpenSearch and Dashboards",
   "main": "cli.js",
   "scripts": {
@@ -20,5 +20,9 @@
   },
   "type": "module",
   "author": "AMoo-Miki",
+  "repository": "github:AMoo-Miki/osd-launcher",
+  "bugs": {
+    "url": "https://github.com/AMoo-Miki/osd-launcher/issues"
+  },
   "license": "MIT"
 }

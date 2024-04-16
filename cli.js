@@ -22,7 +22,7 @@ for (const { slug, name } of projects) {
   if (slug === 'dashboards') continue;
 
   program.addOption(
-    new Option(`--${slug}-source <github>`, `${name} plugin source to use`)
+    new Option(`--${slug}-source <repo>`, `${name} plugin source to use`)
       .implies({ [camelCase(`${slug}`)]: true })
       .hideHelp(),
   );
@@ -50,7 +50,7 @@ const gitOrVersion = input => {
   if (isGitHubSource(value)) return value;
   if (/[:\/]/.test(value))
     throw new InvalidArgumentError(
-      'The value needs to be a complete version (e.g. 2.15.0) or in the form of github://user/repo/branch.');
+      'The value needs to be a complete version (e.g. 2.15.0) or in the form of github:user/repo/branch.');
 
   return `github://${value}`;
 };
@@ -65,8 +65,8 @@ program
   .description('CLI to ease the setup of OpenSearch and Dashboards')
   .option('-os, --opensearch-version <version>', 'OpenSearch version to use', fullVersion)
   .option(
-    '-osd, --dashboards-version <version|github>',
-    'Dashboards version to use\n<version>: use a released version\n<github>: clone a git repo/branch/commit',
+    '-osd, --dashboards-version <version|repo>',
+    'Dashboards version to use\n<version>: use a released version\n<repo>: clone a git repo/branch/commit',
     gitOrVersion,
   )
   .option(
@@ -103,7 +103,7 @@ program
 
 program.addHelpText('after', `
 Fine-tuning Dashboards plugins:
-  The version of Dashboards plugins can be specified using --<name>-source <github>.
+  The version of Dashboards plugins can be specified using --<name>-source <repo>.
   The inclusion of a plugin can be prevented using --no-<name>.
   
   Supported plugin names are: 
@@ -118,10 +118,10 @@ Fine-tuning Dashboards plugins:
 <version> format:
   A complete release version includes all 3 components of a semantic version. e.g. 2.15.0
   
-<github> format:
-  A GitHub source starts with "github://" and includes all 3 names of the use, the repository
+<repo> format:
+  A GitHub source starts with "github:" and includes all 3 names of the use, the repository
   and the branch:
-    github://opensearch-project/opensearch-dashboards/awesome-feature
+    github:opensearch-project/opensearch-dashboards/awesome-feature
     
   A shorthand alternative is also supported to use a branch from the official repositories:
     github://2.x
