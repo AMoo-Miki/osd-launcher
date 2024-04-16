@@ -2,6 +2,13 @@
 
 CLI to ease the setup of OpenSearch and Dashboards
 
+### Installation
+`npm i -g osd-launcher`
+
+### Quick Start
+`osd-launcher -os 2.13.0 -osd 2.13.0 -d /usr/share -p P@$5w04t`
+
+### Usage
 
 ```
 Usage: osd-launcher [options]
