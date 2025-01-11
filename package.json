@@ -1,6 +1,6 @@
 {
   "name": "osd-launcher",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "CLI to ease the setup of OpenSearch and Dashboards",
   "main": "cli.js",
   "scripts": {

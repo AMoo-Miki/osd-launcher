@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { get } from './lib/config.js';
 import { program, Option, InvalidArgumentError } from 'commander';
 import { _error, _ok, _verbose2, _warning } from './lib/logging.js';
@@ -44,10 +44,12 @@ const fullVersion = input => {
   throw new InvalidArgumentError('The value needs to be a complete version (e.g. 2.15.0).');
 };
 
-const gitOrVersion = input => {
+const gitOrVersionOrDirectory = input => {
   const value = input?.trim?.();
   if (isVersion(value)) return value;
   if (isGitHubSource(value)) return value;
+  if (existsSync(value)) return value;
+
   if (/[:\/]/.test(value))
     throw new InvalidArgumentError(
       'The value needs to be a complete version (e.g. 2.15.0) or in the form of github:user/repo/branch.');
@@ -65,9 +67,9 @@ program
   .description('CLI to ease the setup of OpenSearch and Dashboards')
   .option('-os, --opensearch-version <version>', 'OpenSearch version to use', fullVersion)
   .option(
-    '-osd, --dashboards-version <version|repo>',
-    'Dashboards version to use\n<version>: use a released version\n<repo>: clone a git repo/branch/commit',
-    gitOrVersion,
+    '-osd, --dashboards-version <version|repo|directory>',
+    'Dashboards version to use\n<version>: use a released version\n<repo>: clone a git repo/branch/commit\n<directory>: configure and use existing code',
+    gitOrVersionOrDirectory,
   )
   .option(
     '-d, --destination <path>',
@@ -78,7 +80,14 @@ program
   .option('--no-plugins', 'Prevent installation of Dashboards plugins')
   .addOption(
     new Option('--no-security', 'Disable the Security plugins in OpenSearch and Dashboards')
-      .conflicts(['securityVersion']),
+      .conflicts(['securityVersion'])
+      .argParser((value, previous) => {
+        const options = program.opts();
+        if (options.password) {
+          throw new InvalidArgumentError('Password cannot be set when security is disabled (--no-security).');
+        }
+        return value;
+      })
   )
   .option('--refresh-downloads', 'Re-download artifacts even if they are available in cache')
   .option(
@@ -94,7 +103,16 @@ program
   )
   .option('--dashboards-port <number>', 'Port number for OpenSearch to listen on', '5601')
   .option('-u, --username <username>', 'Username to use if security is enable', 'admin')
-  .requiredOption('-p, --password <password>', 'Password to use if security is enable')
+  .addOption(
+    new Option('-p, --password <password>', 'Password to use if security is enabled')
+      .argParser((value, previous) => {
+        const options = program.opts();
+        if (options.security !== true) {
+          throw new InvalidArgumentError('Password cannot be set when security is disabled (--no-security).');
+        }
+        return value;
+      })
+  )
   .option('-dev --no-build', 'Skip building Dashboards when cloned')
   // ToDo: Add ability to start installations as a service
   //.option('--add-service', 'Create services for OpenSearch and Dashboards')
