@@ -81,13 +81,6 @@ program
   .addOption(
     new Option('--no-security', 'Disable the Security plugins in OpenSearch and Dashboards')
       .conflicts(['securityVersion'])
-      .argParser((value, previous) => {
-        const options = program.opts();
-        if (options.password) {
-          throw new InvalidArgumentError('Password cannot be set when security is disabled (--no-security).');
-        }
-        return value;
-      })
   )
   .option('--refresh-downloads', 'Re-download artifacts even if they are available in cache')
   .option(
@@ -103,16 +96,7 @@ program
   )
   .option('--dashboards-port <number>', 'Port number for OpenSearch to listen on', '5601')
   .option('-u, --username <username>', 'Username to use if security is enable', 'admin')
-  .addOption(
-    new Option('-p, --password <password>', 'Password to use if security is enabled')
-      .argParser((value, previous) => {
-        const options = program.opts();
-        if (options.security !== true) {
-          throw new InvalidArgumentError('Password cannot be set when security is disabled (--no-security).');
-        }
-        return value;
-      })
-  )
+  .option('-p, --password <password>', 'Password to use if security is enabled')
   .option('-dev --no-build', 'Skip building Dashboards when cloned')
   // ToDo: Add ability to start installations as a service
   //.option('--add-service', 'Create services for OpenSearch and Dashboards')
@@ -146,7 +130,13 @@ Fine-tuning Dashboards plugins:
     
   If Dashboards is cloned from a numeric branch name (e.g. 2.15 and 2.x), the plugins will
   be cloned from the matching branch of the official sources, unless a specific source is
-  requested for them. 
+  requested for them.
+  
+<dirctory> format:
+  A relative or absolute path to a local directory. e.g. /home/user/osd
+  
+  Using a local directory, any existing plugins will be removed and fresh ones will be
+  cloned from the main branch of the official sources.
 `);
 
 program.parse();
@@ -160,6 +150,11 @@ const run = async () => {
         opts[camelCase(slug)] = false;
   }
   if (isVersion(opts.dashboardsVersion)) opts.build = false;
+
+  if (opts.security === true && !opts.password)
+    return program.error('error: Password is required when security is enabled. Use -p or --password to set a password, or use --no-security to disable security.');
+  if (opts.security !== true && opts.password)
+    return program.error('error: Password cannot be set when security is disabled (--no-security).');
 
   console.log(opts);
 
@@ -195,7 +190,7 @@ const run = async () => {
   if (osDir && osChild)
     _verbose2(`OpenSearch: http${opts.security === true ? 's' : ''}://${opts.opensearchHost}:${opts.opensearchPort}`);
   if (osdDir && osdChild)
-    _verbose2('Dashboards: http://${opts.dashboardsHost}:${opts.dashboardsPort}');
+    _verbose2(`Dashboards: http://${opts.dashboardsHost}:${opts.dashboardsPort}`);
 };
 
 run().catch(err => {
